@@ -70,8 +70,13 @@ export default function Services() {
                 <h3 className="text-xl font-bold mb-4">{service.title}</h3>
                 <p className="text-gray-600 mb-6">{service.description}</p>
                 <Button 
-                  variant="ghost" 
-                  className="text-[hsl(217,91%,60%)] font-semibold hover:text-[hsl(217,91%,55%)] transition-colors p-0"
+                  onClick={() => {
+                    const bookingSection = document.getElementById('booking');
+                    if (bookingSection) {
+                      bookingSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                  className="text-[hsl(217,91%,60%)] font-semibold hover:text-[hsl(217,91%,55%)] transition-colors p-0 bg-transparent border-none shadow-none hover:bg-gray-100"
                 >
                   Learn More <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>

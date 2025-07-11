@@ -165,6 +165,61 @@ Remember: An ounce of prevention is worth a pound of cure!
     }
   };
 
+  const formatContent = (content: string) => {
+    // Convert markdown-style headings and formatting to JSX
+    const lines = content.split('\n');
+    const elements: JSX.Element[] = [];
+    let currentKey = 0;
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      
+      if (line.startsWith('## ')) {
+        // H2 heading
+        elements.push(
+          <h2 key={currentKey++} className="text-2xl font-bold text-gray-800 mt-8 mb-4">
+            {line.replace('## ', '')}
+          </h2>
+        );
+      } else if (line.startsWith('# ')) {
+        // H1 heading
+        elements.push(
+          <h1 key={currentKey++} className="text-3xl font-bold text-gray-800 mt-8 mb-4">
+            {line.replace('# ', '')}
+          </h1>
+        );
+      } else if (line.startsWith('- ')) {
+        // List item - collect all consecutive list items
+        const listItems: string[] = [];
+        let j = i;
+        while (j < lines.length && lines[j].trim().startsWith('- ')) {
+          listItems.push(lines[j].trim().replace('- ', ''));
+          j++;
+        }
+        elements.push(
+          <ul key={currentKey++} className="list-disc list-inside text-gray-700 mb-6 space-y-2">
+            {listItems.map((item, index) => (
+              <li key={index} className="ml-4">{item}</li>
+            ))}
+          </ul>
+        );
+        i = j - 1; // Skip the processed list items
+      } else if (line === '') {
+        // Empty line - add spacing
+        elements.push(<div key={currentKey++} className="mb-4"></div>);
+      } else if (line.length > 0) {
+        // Regular paragraph
+        elements.push(
+          <p key={currentKey++} className="text-gray-700 mb-4 leading-relaxed">
+            {line}
+          </p>
+        );
+      }
+    }
+
+    return elements;
+  };
+
   return (
     <div className="py-20 bg-white">
       <div className="container mx-auto px-4">
@@ -211,8 +266,8 @@ Remember: An ounce of prevention is worth a pound of cure!
 
           {/* Article Content */}
           <div className="prose prose-lg max-w-none">
-            <div className="text-gray-700 leading-relaxed whitespace-pre-line">
-              {getExpandedContent(blogPost.content, blogPost.title)}
+            <div className="text-gray-700 leading-relaxed">
+              {formatContent(getExpandedContent(blogPost.content, blogPost.title))}
             </div>
           </div>
 
