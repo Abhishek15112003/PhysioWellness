@@ -1,45 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Newspaper, ArrowRight } from "lucide-react";
 import type { BlogPost } from "@shared/schema";
-import BlogDetail from "./BlogDetail";
-import BlogList from "./BlogList";
 
 export default function Blog() {
-  const [currentView, setCurrentView] = useState<'home' | 'list' | 'detail'>('home');
-  const [selectedBlogId, setSelectedBlogId] = useState<number | null>(null);
-
+  const [, setLocation] = useLocation();
+  
   const { data: blogPosts, isLoading } = useQuery<BlogPost[]>({
     queryKey: ["/api/blog-posts"],
   });
 
-  // Show blog detail view
-  if (currentView === 'detail' && selectedBlogId) {
-    return (
-      <BlogDetail 
-        blogId={selectedBlogId} 
-        onBack={() => setCurrentView('home')} 
-      />
-    );
-  }
-
-  // Show all articles view
-  if (currentView === 'list') {
-    return (
-      <BlogList 
-        onBack={() => setCurrentView('home')}
-        onSelectPost={(id) => {
-          setSelectedBlogId(id);
-          setCurrentView('detail');
-        }}
-      />
-    );
-  }
-
-  // Home view (default)
   if (isLoading) {
     return (
       <section id="blog" className="py-20 bg-white">
@@ -105,10 +78,7 @@ export default function Blog() {
                 <h3 className="text-xl font-bold mb-3">{post.title}</h3>
                 <p className="text-gray-600 mb-4">{post.excerpt}</p>
                 <Button 
-                  onClick={() => {
-                    setSelectedBlogId(post.id);
-                    setCurrentView('detail');
-                  }}
+                  onClick={() => setLocation(`/blog/${post.id}`)}
                   className="text-[hsl(217,91%,60%)] font-semibold hover:text-[hsl(217,91%,55%)] transition-colors p-0 bg-transparent border-none shadow-none hover:bg-gray-100"
                 >
                   Read More <ArrowRight className="ml-2 h-4 w-4" />
@@ -120,7 +90,7 @@ export default function Blog() {
         
         <div className="text-center mt-12">
           <Button 
-            onClick={() => setCurrentView('list')}
+            onClick={() => setLocation('/blog')}
             className="bg-[hsl(217,91%,60%)] text-white px-8 py-4 text-lg font-semibold hover:bg-[hsl(217,91%,55%)] transition-colors"
           >
             <Newspaper className="mr-2 h-5 w-5" />

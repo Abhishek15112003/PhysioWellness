@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -10,7 +11,9 @@ interface BlogListProps {
   onSelectPost: (id: number) => void;
 }
 
-export default function BlogList({ onBack, onSelectPost }: BlogListProps) {
+export default function BlogList({ onBack }: BlogListProps) {
+  const [, setLocation] = useLocation();
+  
   const { data: blogPosts, isLoading } = useQuery<BlogPost[]>({
     queryKey: ["/api/blog-posts"],
   });
@@ -74,7 +77,7 @@ export default function BlogList({ onBack, onSelectPost }: BlogListProps) {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {blogPosts?.map((post) => (
             <Card key={post.id} className="bg-[hsl(210,20%,98%)] overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer">
-              <div onClick={() => onSelectPost(post.id)}>
+              <div onClick={() => setLocation(`/blog/${post.id}`)}>
                 <img 
                   src={post.imageUrl} 
                   alt={post.title}

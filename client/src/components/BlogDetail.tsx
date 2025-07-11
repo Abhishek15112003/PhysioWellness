@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Calendar, User } from "lucide-react";
@@ -9,7 +10,9 @@ interface BlogDetailProps {
   onBack: () => void;
 }
 
-export default function BlogDetail({ blogId, onBack }: BlogDetailProps) {
+export default function BlogDetail({ blogId }: BlogDetailProps) {
+  const [, setLocation] = useLocation();
+  
   const { data: blogPost, isLoading } = useQuery<BlogPost>({
     queryKey: [`/api/blog-posts/${blogId}`],
   });
@@ -32,7 +35,7 @@ export default function BlogDetail({ blogId, onBack }: BlogDetailProps) {
       <div className="py-20 bg-white">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-2xl font-bold text-gray-800 mb-4">Article not found</h1>
-          <Button onClick={onBack} className="bg-[hsl(217,91%,60%)] text-white">
+          <Button onClick={() => setLocation('/')} className="bg-[hsl(217,91%,60%)] text-white">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Blog
           </Button>
@@ -168,7 +171,7 @@ Remember: An ounce of prevention is worth a pound of cure!
         <div className="max-w-4xl mx-auto">
           {/* Back Button */}
           <Button 
-            onClick={onBack}
+            onClick={() => setLocation('/')}
             className="mb-8 text-[hsl(217,91%,60%)] hover:text-[hsl(217,91%,55%)] bg-transparent border-none shadow-none hover:bg-gray-100"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
@@ -223,7 +226,7 @@ Remember: An ounce of prevention is worth a pound of cure!
               onClick={() => {
                 const bookingSection = document.getElementById('booking');
                 if (bookingSection) {
-                  onBack();
+                  setLocation('/');
                   setTimeout(() => {
                     bookingSection.scrollIntoView({ behavior: 'smooth' });
                   }, 100);
