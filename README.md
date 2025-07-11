@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # PhysioWellness - Physiotherapy Clinic Website
 
 A modern, responsive website for a physiotherapy clinic built with React, TypeScript, and Express.
