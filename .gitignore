@@ -94,3 +94,4 @@ temp/
 
 # DynamoDB Local files
 .dynamodb/
+.vercel

@@ -6,45 +6,47 @@ import {
   Zap, 
   HandHeart, 
   Dumbbell,
-  ArrowRight
+  ArrowRight,
+  Heart,
+  Scissors
 } from "lucide-react";
 
 export default function Services() {
   const services = [
     {
       icon: Activity,
-      title: "Sports Injury Therapy",
-      description: "Specialized treatment for sports-related injuries, helping athletes return to peak performance safely and effectively.",
+      title: "Physiotherapy",
+      description: "Comprehensive physiotherapy treatments to restore mobility, reduce pain, and improve overall physical function.",
       color: "bg-[hsl(217,91%,60%)]"
     },
     {
       icon: UserX,
-      title: "Post-Operative Rehabilitation",
-      description: "Comprehensive recovery programs designed to restore function and mobility after surgical procedures.",
+      title: "Rehabilitation",
+      description: "Personalized rehabilitation programs designed to restore function and help you return to your daily activities.",
       color: "bg-[hsl(142,76%,36%)]"
     },
     {
       icon: Stethoscope,
-      title: "Back Pain Treatment",
-      description: "Targeted therapy for chronic and acute back pain, addressing root causes for long-term relief.",
+      title: "Osteopathy",
+      description: "Holistic osteopathic treatments focusing on the body's natural healing abilities through manual techniques.",
       color: "bg-[hsl(38,92%,50%)]"
+    },
+    {
+      icon: Heart,
+      title: "Cupping",
+      description: "Traditional cupping therapy to improve blood circulation, reduce muscle tension, and promote healing.",
+      color: "bg-purple-600"
+    },
+    {
+      icon: Scissors,
+      title: "Kinesiotapping",
+      description: "Specialized taping techniques to support muscles, improve circulation, and enhance athletic performance.",
+      color: "bg-pink-600"
     },
     {
       icon: Zap,
       title: "Dry Needling",
       description: "Advanced technique for treating muscle tension and trigger points, promoting faster healing and pain relief.",
-      color: "bg-purple-600"
-    },
-    {
-      icon: HandHeart,
-      title: "Manual Therapy",
-      description: "Hands-on techniques including massage, joint mobilization, and soft tissue manipulation for optimal healing.",
-      color: "bg-pink-600"
-    },
-    {
-      icon: Dumbbell,
-      title: "Exercise Rehabilitation",
-      description: "Customized exercise programs to strengthen, condition, and prevent future injuries.",
       color: "bg-indigo-600"
     }
   ];

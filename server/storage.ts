@@ -15,10 +15,11 @@ import {
   type ContactMessage,
   type InsertContactMessage
 } from "@shared/schema";
+import bcrypt from 'bcryptjs';
 
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
+  getUserByEmail(email: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   
   createAppointment(appointment: InsertAppointment): Promise<Appointment>;
@@ -64,11 +65,46 @@ export class MemStorage implements IStorage {
     this.currentContactMessageId = 1;
     
     // Initialize with some sample data
-    this.initializeSampleData();
+    this.initializeSampleData().catch(console.error);
   }
 
-  private initializeSampleData() {
-    // Sample testimonials
+  private async initializeSampleData() {
+    // Sample users with hashed passwords
+    const sampleUsers = [
+      {
+        firstName: "Admin",
+        lastName: "User",
+        email: "admin@aanjanaji.com",
+        phone: "+1234567890",
+        password: await bcrypt.hash("admin123", 10),
+        role: "admin",
+        isActive: true,
+        createdAt: new Date()
+      },
+      {
+        firstName: "John",
+        lastName: "Patient",
+        email: "patient@example.com",
+        phone: "+1234567891",
+        password: await bcrypt.hash("patient123", 10),
+        role: "patient",
+        isActive: true,
+        createdAt: new Date()
+      }
+    ];
+
+    sampleUsers.forEach(user => {
+      const id = this.currentUserId++;
+      this.users.set(id, { 
+        ...user, 
+        id,
+        dateOfBirth: null,
+        gender: null
+      });
+    });
+
+    // Sample testimonials with different timestamps for proper sorting
+    const now = new Date();
     const sampleTestimonials = [
       {
         name: "Sarah Mitchell",
@@ -76,23 +112,39 @@ export class MemStorage implements IStorage {
         rating: 5,
         review: "After my knee surgery, I was worried I'd never run again. Dr. Johnson and her team created a personalized rehabilitation plan that not only got me back to running but made me stronger than before. I'm forever grateful!",
         isApproved: true,
-        createdAt: new Date()
+        createdAt: new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000) // 2 days ago
       },
       {
         name: "Robert Chen",
         occupation: "Office Manager",
         rating: 5,
-        review: "I've been dealing with chronic back pain for years. The team at PhysioWell didn't just treat my symptoms - they addressed the root cause. I'm now pain-free and have the tools to stay that way.",
+        review: "I've been dealing with chronic back pain for years. The team at Aanjanaji Physio Care didn't just treat my symptoms - they addressed the root cause. I'm now pain-free and have the tools to stay that way.",
         isApproved: true,
-        createdAt: new Date()
+        createdAt: new Date(now.getTime() - 1 * 24 * 60 * 60 * 1000) // 1 day ago
       },
       {
         name: "Maria Rodriguez",
         occupation: "Tennis Player",
         rating: 5,
-        review: "Professional, caring, and incredibly knowledgeable. The dry needling treatment was a game-changer for my shoulder pain. I can't recommend PhysioWell highly enough!",
+        review: "Professional, caring, and incredibly knowledgeable. The dry needling treatment was a game-changer for my shoulder pain. I can't recommend Aanjanaji Physio Care highly enough!",
         isApproved: true,
-        createdAt: new Date()
+        createdAt: new Date(now.getTime() - 3 * 60 * 60 * 1000) // 3 hours ago
+      },
+      {
+        name: "David Kumar",
+        occupation: "Software Engineer",
+        rating: 5,
+        review: "Working from home led to terrible posture and neck pain. The ergonomic assessment and treatment plan from Aanjanaji Physio Care completely transformed my work setup and eliminated my pain.",
+        isApproved: true,
+        createdAt: new Date(now.getTime() - 30 * 60 * 1000) // 30 minutes ago
+      },
+      {
+        name: "Lisa Thompson",
+        occupation: "Yoga Instructor",
+        rating: 4,
+        review: "Excellent physiotherapy services! The staff is very professional and the treatment was effective. I appreciate the detailed explanation of exercises and the follow-up care.",
+        isApproved: true,
+        createdAt: new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000) // 1 week ago
       }
     ];
 
@@ -106,7 +158,7 @@ export class MemStorage implements IStorage {
       {
         title: "5 Essential Exercises for Lower Back Pain Relief",
         excerpt: "Learn simple yet effective exercises you can do at home to strengthen your core and alleviate lower back pain...",
-        content: "Lower back pain is one of the most common complaints we see at PhysioWell. Here are 5 exercises that can help...",
+        content: "Lower back pain is one of the most common complaints we see at Aanjanaji Physio Care. Here are 5 exercises that can help...",
         category: "Exercise Tips",
         imageUrl: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=250",
         publishedAt: new Date("2024-12-15")
@@ -139,15 +191,24 @@ export class MemStorage implements IStorage {
     return this.users.get(id);
   }
 
-  async getUserByUsername(username: string): Promise<User | undefined> {
+  async getUserByEmail(email: string): Promise<User | undefined> {
     return Array.from(this.users.values()).find(
-      (user) => user.username === username,
+      (user) => user.email === email,
     );
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = this.currentUserId++;
-    const user: User = { ...insertUser, id };
+    const user: User = { 
+      ...insertUser, 
+      id,
+      phone: insertUser.phone ?? null,
+      dateOfBirth: null,
+      gender: null,
+      role: "patient",
+      isActive: true,
+      createdAt: new Date()
+    };
     this.users.set(id, user);
     return user;
   }
@@ -189,7 +250,7 @@ export class MemStorage implements IStorage {
     const newTestimonial: Testimonial = { 
       ...testimonial, 
       id, 
-      isApproved: false,
+      isApproved: true, // Auto-approve testimonials
       createdAt: new Date()
     };
     this.testimonials.set(id, newTestimonial);

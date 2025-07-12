@@ -1,4 +1,4 @@
-# PhysioWellness - Physiotherapy Clinic Website
+# Aanjanaji Physio Care - Physiotherapy Clinic Website
 
 A modern, responsive website for a physiotherapy clinic built with React, TypeScript, and Express.
 

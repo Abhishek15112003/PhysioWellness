@@ -83,7 +83,7 @@ export default function Contact() {
               </div>
               <div>
                 <h3 className="text-xl font-bold mb-2">Our Location</h3>
-                <p className="text-gray-300">123 Health Street, Suite 100<br />Wellness City, WC 12345</p>
+                <p className="text-gray-300">Varunchi Marg, Apposite AK Building<br />Freeganj, Ujjain MP</p>
               </div>
             </div>
             
@@ -93,7 +93,7 @@ export default function Contact() {
               </div>
               <div>
                 <h3 className="text-xl font-bold mb-2">Phone</h3>
-                <p className="text-gray-300">(555) 123-4567</p>
+                <p className="text-gray-300">8770316948<br />7724925551</p>
               </div>
             </div>
             
@@ -103,7 +103,7 @@ export default function Contact() {
               </div>
               <div>
                 <h3 className="text-xl font-bold mb-2">Email</h3>
-                <p className="text-gray-300">info@physiowellclinic.com</p>
+                <p className="text-gray-300">Rahulakodiyarp@gmail.com</p>
               </div>
             </div>
             
@@ -114,9 +114,7 @@ export default function Contact() {
               <div>
                 <h3 className="text-xl font-bold mb-2">Hours</h3>
                 <p className="text-gray-300">
-                  Monday - Friday: 8:00 AM - 6:00 PM<br />
-                  Saturday: 9:00 AM - 4:00 PM<br />
-                  Sunday: Closed
+                  Everyday: 12:00 PM - 9:00 PM
                 </p>
               </div>
             </div>

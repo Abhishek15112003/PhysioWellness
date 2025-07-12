@@ -18,18 +18,18 @@ export default function Footer() {
                 <Heart className="text-white h-6 w-6" />
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-[hsl(217,91%,60%)]">PhysioWell</h3>
+                <h3 className="text-2xl font-bold text-[hsl(217,91%,60%)]">Aanjanaji Physio Care</h3>
                 <p className="text-sm text-gray-400">Clinic</p>
               </div>
             </div>
             <p className="text-gray-400 mb-4">
-              Professional physiotherapy care focused on your recovery and well-being.
+              Professional physiotherapy care since 2022. More than 1000 happy patients with 3 years of clinical experience.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-[hsl(217,91%,60%)] transition-colors">
                 <Facebook className="h-6 w-6" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-[hsl(217,91%,60%)] transition-colors">
+              <a href="https://www.instagram.com/dr.rahulakodia?igsh=MXNtbnVyczBvejZ2MA%3D%3D&utm_source=qr" className="text-gray-400 hover:text-[hsl(217,91%,60%)] transition-colors">
                 <Instagram className="h-6 w-6" />
               </a>
               <a href="#" className="text-gray-400 hover:text-[hsl(217,91%,60%)] transition-colors">
@@ -98,12 +98,12 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-bold mb-4">Services</h4>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-400 hover:text-[hsl(217,91%,60%)] transition-colors">Sports Injury Therapy</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-[hsl(217,91%,60%)] transition-colors">Post-Operative Rehab</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-[hsl(217,91%,60%)] transition-colors">Back Pain Treatment</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-[hsl(217,91%,60%)] transition-colors">Physiotherapy</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-[hsl(217,91%,60%)] transition-colors">Rehabilitation</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-[hsl(217,91%,60%)] transition-colors">Osteopathy</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-[hsl(217,91%,60%)] transition-colors">Cupping</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-[hsl(217,91%,60%)] transition-colors">Kinesiotapping</a></li>
               <li><a href="#" className="text-gray-400 hover:text-[hsl(217,91%,60%)] transition-colors">Dry Needling</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-[hsl(217,91%,60%)] transition-colors">Manual Therapy</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-[hsl(217,91%,60%)] transition-colors">Exercise Rehab</a></li>
             </ul>
           </div>
           
@@ -112,16 +112,16 @@ export default function Footer() {
             <ul className="space-y-2">
               <li className="text-gray-400 flex items-start">
                 <span className="mr-2">📍</span>
-                123 Health Street, Suite 100<br />
-                Wellness City, WC 12345
+                Varunchi Marg, Apposite AK Building<br />
+                Freeganj, Ujjain MP
               </li>
               <li className="text-gray-400 flex items-center">
                 <span className="mr-2">📞</span>
-                (555) 123-4567
+                8770316948, 7724925551
               </li>
               <li className="text-gray-400 flex items-center">
                 <span className="mr-2">✉️</span>
-                info@physiowellclinic.com
+                Rahulakodiyarp@gmail.com
               </li>
             </ul>
           </div>
@@ -129,7 +129,7 @@ export default function Footer() {
         
         <div className="border-t border-gray-700 mt-8 pt-8 text-center">
           <p className="text-gray-400">
-            © 2024 PhysioWell Clinic. All rights reserved. | 
+            © 2022-2025 Aanjanaji Physio Care. All rights reserved. | 
             <a href="#" className="hover:text-[hsl(217,91%,60%)] transition-colors ml-1">Privacy Policy</a> | 
             <a href="#" className="hover:text-[hsl(217,91%,60%)] transition-colors ml-1">Terms of Service</a>
           </p>

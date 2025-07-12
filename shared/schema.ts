@@ -49,8 +49,16 @@ export const contactMessages = pgTable("contact_messages", {
 
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
-  username: text("username").notNull().unique(),
+  firstName: text("first_name").notNull(),
+  lastName: text("last_name").notNull(),
+  email: text("email").notNull().unique(),
+  phone: text("phone"),
   password: text("password").notNull(),
+  dateOfBirth: text("date_of_birth"),
+  gender: text("gender"),
+  role: text("role").notNull().default("patient"),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const insertAppointmentSchema = createInsertSchema(appointments).omit({
@@ -77,8 +85,16 @@ export const insertContactMessageSchema = createInsertSchema(contactMessages).om
 });
 
 export const insertUserSchema = createInsertSchema(users).pick({
-  username: true,
+  firstName: true,
+  lastName: true,
+  email: true,
+  phone: true,
   password: true,
+});
+
+export const loginSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(6),
 });
 
 export type InsertAppointment = z.infer<typeof insertAppointmentSchema>;

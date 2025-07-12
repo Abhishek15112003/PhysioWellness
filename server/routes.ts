@@ -4,11 +4,111 @@ import { storage } from "./storage";
 import { 
   insertAppointmentSchema, 
   insertTestimonialSchema, 
-  insertContactMessageSchema 
+  insertContactMessageSchema,
+  insertUserSchema,
+  loginSchema
 } from "@shared/schema";
 import { z } from "zod";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+
+const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key-here";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Authentication routes
+  app.post("/api/auth/signup", async (req, res) => {
+    try {
+      const validatedData = insertUserSchema.parse(req.body);
+      
+      // Check if user already exists
+      const existingUser = await storage.getUserByEmail(validatedData.email);
+      if (existingUser) {
+        return res.status(400).json({ message: "User with this email already exists" });
+      }
+
+      // Hash password
+      const hashedPassword = await bcrypt.hash(validatedData.password, 10);
+      
+      // Create user
+      const user = await storage.createUser({
+        ...validatedData,
+        password: hashedPassword
+      });
+
+      // Remove password from response
+      const { password, ...userWithoutPassword } = user;
+      
+      res.status(201).json({ 
+        message: "User created successfully",
+        user: userWithoutPassword 
+      });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ message: "Invalid user data", errors: error.errors });
+      } else {
+        res.status(500).json({ message: "Failed to create user" });
+      }
+    }
+  });
+
+  app.post("/api/auth/login", async (req, res) => {
+    try {
+      let { email, password } = req.body;
+      
+      // Allow "admin" as a shorthand for the admin email
+      if (email === "admin") {
+        email = "admin@aanjanaji.com";
+      }
+      
+      const validatedData = loginSchema.parse({ email, password });
+      console.log("Login attempt for email:", validatedData.email);
+      
+      // Find user by email
+      const user = await storage.getUserByEmail(validatedData.email);
+      console.log("User found:", user ? `${user.firstName} ${user.lastName} (${user.role})` : "No user found");
+      
+      if (!user || !user.isActive) {
+        console.log("Login failed: User not found or inactive");
+        return res.status(401).json({ message: "Invalid credentials" });
+      }
+
+      // Check password
+      const isValidPassword = await bcrypt.compare(validatedData.password, user.password);
+      console.log("Password valid:", isValidPassword);
+      
+      if (!isValidPassword) {
+        console.log("Login failed: Invalid password");
+        return res.status(401).json({ message: "Invalid credentials" });
+      }
+
+      // Generate JWT token
+      const token = jwt.sign(
+        { 
+          userId: user.id, 
+          email: user.email, 
+          role: user.role 
+        },
+        JWT_SECRET,
+        { expiresIn: "24h" }
+      );
+
+      // Remove password from response
+      const { password: userPassword, ...userWithoutPassword } = user;
+
+      res.json({
+        message: "Login successful",
+        token,
+        user: userWithoutPassword
+      });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ message: "Invalid login data", errors: error.errors });
+      } else {
+        res.status(500).json({ message: "Login failed" });
+      }
+    }
+  });
+
   // Appointment routes
   app.post("/api/appointments", async (req, res) => {
     try {
@@ -71,6 +171,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/testimonials/all", async (req, res) => {
+    try {
+      const testimonials = await storage.getAllTestimonials();
+      res.json(testimonials);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch all testimonials" });
+    }
+  });
+
   // Blog routes
   app.get("/api/blog-posts", async (req, res) => {
     try {
@@ -116,6 +225,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(messages);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch contact messages" });
+    }
+  });
+
+  // Debug endpoint to check if admin user exists
+  app.get("/api/debug/admin", async (req, res) => {
+    try {
+      const adminUser = await storage.getUserByEmail("admin@aanjanaji.com");
+      if (adminUser) {
+        res.json({
+          found: true,
+          user: {
+            id: adminUser.id,
+            firstName: adminUser.firstName,
+            lastName: adminUser.lastName,
+            email: adminUser.email,
+            role: adminUser.role,
+            isActive: adminUser.isActive,
+            passwordExists: !!adminUser.password
+          }
+        });
+      } else {
+        res.json({ found: false });
+      }
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
     }
   });
 

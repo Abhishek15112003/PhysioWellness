@@ -5,10 +5,10 @@ export default function About() {
     <section id="about" className="py-20 bg-[hsl(210,20%,98%)]">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">About PhysioWell Clinic</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">About Aanjanaji Physio Care</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            For over 15 years, we've been dedicated to providing exceptional physiotherapy care, 
-            helping thousands of patients achieve their health and wellness goals.
+            Since 2022, we've been dedicated to providing exceptional physiotherapy care with 3 years of clinical experience, 
+            helping more than 1000 happy patients achieve their health and wellness goals.
           </p>
         </div>
         
@@ -22,12 +22,12 @@ export default function About() {
             </p>
             <div className="grid grid-cols-2 gap-6">
               <div className="text-center">
-                <div className="text-3xl font-bold text-[hsl(217,91%,60%)]">15+</div>
-                <p className="text-gray-600">Years Experience</p>
+                <div className="text-3xl font-bold text-[hsl(217,91%,60%)]">3</div>
+                <p className="text-gray-600">Years Clinical Experience</p>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-[hsl(142,76%,36%)]">5000+</div>
-                <p className="text-gray-600">Patients Treated</p>
+                <div className="text-3xl font-bold text-[hsl(142,76%,36%)]">1000+</div>
+                <p className="text-gray-600">Happy Patients</p>
               </div>
             </div>
           </div>

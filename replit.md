@@ -1,8 +1,8 @@
-# PhysioWell Clinic - Full Stack Web Application
+# Aanjanaji Physio Care - Full Stack Web Application
 
 ## Overview
 
-This is a full-stack web application for PhysioWell Clinic, a physiotherapy clinic website. The application provides a complete digital presence with appointment booking, testimonials, blog posts, and contact management features. It's built with modern web technologies focusing on performance, user experience, and maintainability.
+This is a full-stack web application for Aanjanaji Physio Care, a physiotherapy clinic website. The application provides a complete digital presence with appointment booking, testimonials, blog posts, and contact management features. It's built with modern web technologies focusing on performance, user experience, and maintainability.
 
 ## User Preferences
 

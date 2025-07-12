@@ -71,7 +71,7 @@ export default function BlogDetail({ blogId }: BlogDetailProps) {
     switch (title) {
       case "5 Essential Exercises for Lower Back Pain Relief":
         return `
-Lower back pain is one of the most common complaints we see at PhysioWell. Here are 5 exercises that can help strengthen your core and alleviate pain:
+Lower back pain is one of the most common complaints we see at Aanjanaji Physio Care. Here are 5 exercises that can help strengthen your core and alleviate pain:
 
 ## 1. Cat-Cow Stretch
 Start on your hands and knees. Arch your back and look up (cow), then round your spine and tuck your chin (cat). Repeat 10-15 times.
@@ -251,7 +251,7 @@ Remember: An ounce of prevention is worth a pound of cure!
               </div>
               <div className="flex items-center text-gray-500">
                 <User className="mr-2 h-4 w-4" />
-                PhysioWell Team
+                Aanjanaji Physio Care Team
               </div>
             </div>
 
